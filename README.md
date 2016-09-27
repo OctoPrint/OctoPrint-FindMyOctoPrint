@@ -29,6 +29,13 @@ plugins:
     # instance name if only the hostname is known
     instance_with_host: "OctoPrint on {host}"
 
+    # paths whose existance will disable the updater
+    #
+    # can be used to easily disable even before very first startup
+    # for privacy reasons
+    # disable_if_exists:
+    # - /boot/dont_register.txt
+
     # everything under "public" is taken from the discovery plugin
     # settings if possible but can be overwritten here too
     #

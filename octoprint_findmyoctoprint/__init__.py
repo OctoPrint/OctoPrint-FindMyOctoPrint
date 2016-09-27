@@ -39,6 +39,7 @@ class FindMyOctoPrintPlugin(octoprint.plugin.StartupPlugin,
 		            interval_noclient=60.0,
 		            instance_with_name=u"OctoPrint instance \"{name}\"",
 		            instance_with_host=u"OctoPrint instance on {host}",
+		            disable_if_exists=[],
 		            public=dict(uuid=None,
 		                        scheme=None,
 		                        port=None,
@@ -49,7 +50,7 @@ class FindMyOctoPrintPlugin(octoprint.plugin.StartupPlugin,
 	##~~ StartupPlugin
 
 	def on_startup(self, host, port):
-		if self._url:
+		if self._url and self._not_disabled():
 			self._start_update_thread(host, port)
 
 	##~~ BlueprintPlugin
@@ -160,7 +161,9 @@ class FindMyOctoPrintPlugin(octoprint.plugin.StartupPlugin,
 		                                            self._perform_update_request,
 		                                            args=(uuid, scheme, port, path),
 		                                            kwargs=dict(http_user=http_user, http_password=http_password),
-		                                            run_first=True)
+		                                            run_first=True,
+		                                            condition=self._not_disabled,
+		                                            on_condition_false=self._on_disabled)
 		self._thread.start()
 
 	def _get_interval(self):
@@ -169,6 +172,16 @@ class FindMyOctoPrintPlugin(octoprint.plugin.StartupPlugin,
 		else:
 			interval = self._settings.get_float(["interval_noclient"])
 		return interval
+
+	def _not_disabled(self):
+		import os
+		for path in self._settings.get(["disable_if_exists"]):
+			if os.path.exists(path):
+				return False
+		return True
+
+	def _on_disabled(self, *args, **kwargs):
+		self._logger.info("Registration with \"Find my OctoPrint\" disabled.")
 
 	def _perform_update_request(self, uuid, scheme, port, path, http_user=None, http_password=None):
 		urls = []
