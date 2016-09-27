@@ -11,7 +11,7 @@ or manually using this URL:
 
 ## Configuration
 
-```
+``` yaml
 plugins:
   findmyoctoprint:
     # registry endpoint to use
@@ -22,6 +22,12 @@ plugins:
 
     # interval for re-registrations when no client has been seen yet
     interval_noclient: 60.0
+
+    # instance name if server name is configured
+    instance_with_name: "OctoPrint instance \"{name}\""
+
+    # instance name if only the hostname is known
+    instance_with_host: "OctoPrint on {host}"
 
     # everything under "public" is taken from the discovery plugin
     # settings if possible but can be overwritten here too

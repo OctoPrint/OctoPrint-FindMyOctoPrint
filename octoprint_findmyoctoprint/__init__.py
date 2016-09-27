@@ -37,6 +37,8 @@ class FindMyOctoPrintPlugin(octoprint.plugin.StartupPlugin,
 		return dict(url="https://find.octoprint.org/registry",
 		            interval_client=300.0,
 		            interval_noclient=60.0,
+		            instance_with_name=u"OctoPrint instance \"{name}\"",
+		            instance_with_host=u"OctoPrint instance on {host}",
 		            public=dict(uuid=None,
 		                        scheme=None,
 		                        port=None,
@@ -98,9 +100,9 @@ class FindMyOctoPrintPlugin(octoprint.plugin.StartupPlugin,
 	def _find_name(self):
 		name = self._settings.global_get(["appearance", "name"])
 		if name:
-			return u"OctoPrint instance \"{}\"".format(name)
+			return self._settings.get(["instance_with_name"]).format(name=name)
 		else:
-			return u"OctoPrint instance on {}".format(socket.gethostname())
+			return self._settings.get(["instance_with_host"]).format(host=socket.gethostname())
 
 	def _find_color(self):
 		return self._settings.global_get(["appearance", "color"])
