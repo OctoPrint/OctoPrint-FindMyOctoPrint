@@ -11,13 +11,15 @@ repos:
       - id: check-toml
       - id: check-merge-conflict
       - id: fix-encoding-pragma
+        args: ["--remove"]
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.10.0
+    hooks:
+      - id: pyupgrade
+        args: ["--py37-plus"]
   - repo: https://github.com/OctoPrint/codemods
     rev: devel
     hooks:
-      - id: codemod_dict_to_literal
-        stages: ["manual"]
-      - id: codemod_set_to_literal
-        stages: ["manual"]
       - id: codemod_not_in
         stages: ["manual"]
   - repo: https://github.com/pre-commit/mirrors-isort

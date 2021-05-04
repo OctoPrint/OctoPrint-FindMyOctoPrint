@@ -1,0 +1,4 @@
+# refs to ignore during git blame, use with --ignore-revs-file
+
+# black, prettier, isort, pre-commit
+32ca816e08c2bd62909b3cf00fd71eb7860dab54

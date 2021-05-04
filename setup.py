@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 ########################################################################################################################
 ### Do not forget to adjust the following variables to your own plugin.
 
@@ -24,7 +22,7 @@ plugin_description = """Client for Find My OctoPrint"""
 plugin_author = "Gina Häußge"
 
 # The plugin's author's mail address.
-plugin_author_email = "osd@foosel.net"
+plugin_author_email = "gina@octoprint.org"
 
 # The plugin's homepage URL. Can be overwritten within OctoPrint's internal data via __plugin_url__ in the plugin module
 plugin_url = "https://github.com/OctoPrint/OctoPrint-FindMyOctoPrint"

@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import socket
 
 import flask
@@ -41,8 +38,8 @@ class FindMyOctoPrintPlugin(
             url="https://find.octoprint.org/registry",
             interval_client=300.0,
             interval_noclient=60.0,
-            instance_with_name=u'OctoPrint instance "{name}"',
-            instance_with_host=u"OctoPrint instance on {host}",
+            instance_with_name='OctoPrint instance "{name}"',
+            instance_with_host="OctoPrint instance on {host}",
             disable_if_exists=[],
             public=dict(
                 uuid=None, scheme=None, port=None, path=None, httpUser=None, httpPass=None
@@ -192,7 +189,7 @@ class FindMyOctoPrintPlugin(
         )
 
         # start registration thread
-        self._logger.info('Registering with "Find my OctoPrint" at {}'.format(self._url))
+        self._logger.info(f'Registering with "Find my OctoPrint" at {self._url}')
         self._thread = octoprint.util.RepeatedTimer(
             self._get_interval,
             self._perform_update_request,
@@ -248,12 +245,10 @@ class FindMyOctoPrintPlugin(
             name=self._find_name(),
             color=self._find_color(),
             urls=urls,
-            query="plugin/{}/{}".format(self._identifier, self._secret),
+            query=f"plugin/{self._identifier}/{self._secret}",
         )
 
-        headers = {
-            "User-Agent": "OctoPrint-FindMyOctoPrint/{}".format(self._plugin_version)
-        }
+        headers = {"User-Agent": f"OctoPrint-FindMyOctoPrint/{self._plugin_version}"}
 
         self._logger.info('Sending registration to "Find my OctoPrint"')
         try:
@@ -274,14 +269,14 @@ class FindMyOctoPrintPlugin(
         prefix = ""
         if http_user is not None:
             if http_password is not None:
-                prefix = "{}:{}@".format(http_user, http_password)
+                prefix = f"{http_user}:{http_password}@"
             else:
-                prefix = "{}@".format(http_user)
-        return "{}://{}{}:{}{}".format(scheme, prefix, host, port, path)
+                prefix = f"{http_user}@"
+        return f"{scheme}://{prefix}{host}:{port}{path}"
 
 
 __plugin_name__ = "Find My OctoPrint"
-__plugin_pythoncompat__ = ">=2.7,<4"
+__plugin_pythoncompat__ = ">=3.7,<4"
 
 
 def __plugin_load__():
