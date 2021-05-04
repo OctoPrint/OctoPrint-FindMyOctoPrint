@@ -35,7 +35,8 @@ class FindMyOctoPrintPlugin(
 
     def get_settings_defaults(self):
         return dict(
-            url="https://find.octoprint.org/registry",
+            # This is not a typo, findd.octoprint.org is the backend!
+            url="https://findd.octoprint.org/registry",
             interval_client=300.0,
             interval_noclient=60.0,
             instance_with_name='OctoPrint instance "{name}"',
@@ -87,6 +88,18 @@ class FindMyOctoPrintPlugin(
                 user="OctoPrint",
                 repo="OctoPrint-FindMyOctoPrint",
                 current=self._plugin_version,
+                stable_branch={
+                    "name": "Stable",
+                    "branch": "main",
+                    "commitish": ["devel", "main"],
+                },
+                prerelease_branches=[
+                    {
+                        "name": "Prerelease",
+                        "branch": "devel",
+                        "commitish": ["devel", "main"],
+                    }
+                ],
                 # update method: pip
                 pip="https://github.com/OctoPrint/OctoPrint-FindMyOctoPrint/archive/{target_version}.zip",
             )
@@ -211,7 +224,10 @@ class FindMyOctoPrintPlugin(
     def _not_disabled(self):
         import os
 
-        for path in self._settings.get(["disable_if_exists"]):
+        disable_if_exists = [
+            os.path.join(self._data_folder, "disabled")
+        ] + self._settings.get(["disable_if_exists"])
+        for path in disable_if_exists:
             if os.path.exists(path):
                 return False
         return True

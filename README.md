@@ -1,21 +1,23 @@
 # Find My OctoPrint
 
-Makes your OctoPrint instance discoverable via ``find.octoprint.org``.
+Makes your OctoPrint instance discoverable via [find.octoprint.org](http://find.octoprint.org).
 
 ## Setup
 
-Install via the bundled [Plugin Manager](https://github.com/foosel/OctoPrint/wiki/Plugin:-Plugin-Manager)
+Install via the bundled [Plugin Manager](https://docs.octoprint.org/en/master/bundledplugins/pluginmanager.html)
 or manually using this URL:
 
-    https://github.com/OctoPrint/OctoPrint-FindMyOctoPrint/archive/master.zip
+    https://github.com/OctoPrint/OctoPrint-FindMyOctoPrint/archive/main.zip
+
+**Note:** Requires Python 3.7 or later!
 
 ## Configuration
 
 ``` yaml
 plugins:
   findmyoctoprint:
-    # registry endpoint to use
-    url: https://find.octoprint.org/registry
+    # registry endpoint to use, default is https://findd.octoprint.org (sic!)
+    url: https://findd.octoprint.org/registry
 
     # interval for re-registrations after a client has been seen
     interval_client: 300.0
